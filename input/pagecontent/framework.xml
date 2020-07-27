@@ -1,0 +1,48 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../src-generated/schemas/fhir-single.xsd">
+  <a name="overview"> </a>
+  <h3>Overview</h3>
+  <p>
+    Overview text...
+  </p>
+  <img src="overview.png" alt="Overview of what we're doing"/>
+  <p> </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>Describe the picture</li>
+    <li>Conceptually, we create a common library, which can then be referenced by other libraries.  </li>
+    <li>Our convention is that a FHIR Library always wrap a cql library</li>
+    <li>Our convention is that referencing is between FHIR Libraries (even if cql libraries also reference each other)</li>
+    <li>eCQM: a measure library (e.g. IPP criteria) references the definition library (e.g. depression)</li>
+    <li>CDS: a decision support rule library (e.g. trigger criteria) references the definition library (e.g. depression)</li>
+    <li>Research: a research library (e.g. enrollment criteria) references the definition library (e.g. depression)</li>
+    <li>...</li>
+  </ul>
+
+  <a name="FHIRusage"> </a>
+  <h3>Details on FHIR usage</h3>
+  <p>
+    Details on FHIR usage text...
+  </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>Use of the FHIR Library resource</li>
+    <li>How we reference QI Core</li>
+    <li>Referencing between FHIR Libraries</li>
+    <li>...</li>
+  </ul>
+
+  <a name="cqlusage"> </a>
+  <h3>Details on CQL usage</h3>
+  <p>
+    Details on CQL usage text...
+  </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>criteria based on a timeframe (such as measurement year)</li>
+    <li>cql using clause</li>
+    <li>cql includes</li>
+    <li>cql value set referencing</li>
+    <li>...</li>
+  </ul>
+
+</div>

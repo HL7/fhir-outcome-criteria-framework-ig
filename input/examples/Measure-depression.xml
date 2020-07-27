@@ -1,0 +1,81 @@
+<Measure xmlns="http://hl7.org/fhir">
+  <id value="depression"/>
+  <extension
+             url="http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis">
+    <valueCode value="Encounter"/>
+  </extension>
+  <url value="http://hl7.org/fhir/us/cqfmeasures/Measure/depressionMeasure"/>
+  <identifier>
+    <use value="official"/>
+    <system value="http://example.org/fhir/cqi/ecqm/Measure/Identifier/exm"/>
+    <value value="146"/>
+  </identifier>
+  <version value="1.0.0"/>
+  <name value="Depression Measure"/>
+  <title value="Depression measure"/>
+  <status value="active"/>
+  <experimental value="true"/>
+  <date value="2019-02-21T00:00:00+00:00"/>
+  <publisher value="OM1"/>
+  <description value="..."/>
+  <purpose value="..."/>
+  <effectivePeriod>
+    <start value="2018-01-01T00:00:00+00:00"/>
+    <end value="2018-12-31T00:00:00+00:00"/>
+  </effectivePeriod>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+      <display value="United States of America"/>
+    </coding>
+  </jurisdiction>
+  <relatedArtifact>
+    <type value="depends-on"/>
+    <resource>
+      <reference value="Library/fhirhelpers"/>
+    </resource>
+  </relatedArtifact>
+  <relatedArtifact>
+    <type value="depends-on"/>
+    <resource>
+      <reference value="Library/common-fhir"/>
+    </resource>
+  </relatedArtifact>
+  <library>
+    <reference value="Library/depressionMeasureLibrary"/>
+  </library>
+  <disclaimer value="..."/>
+  <scoring>
+    <coding>
+      <system value="http://hl7.org/fhir/measure-scoring"/>
+      <code value="proportion"/>
+    </coding>
+  </scoring>
+  <type>
+    <coding>
+      <system value="http://hl7.org/fhir/measure-type"/>
+      <code value="process"/>
+    </coding>
+  </type>
+  <rationale value="..."/>
+  <clinicalRecommendationStatement value="... ..."/>
+  <improvementNotation value="increase"/>
+  <guidance value="..."/>
+  <group>
+    <identifier>
+      <value value="group-1"/>
+    </identifier>
+    <population>
+      <code>
+        <coding>
+          <system
+                  value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="initial-population"/>
+          <display value="Initial Population"/>
+        </coding>
+      </code>
+      <criteria value="Initial Population"/>
+    </population>
+  </group>
+</Measure>

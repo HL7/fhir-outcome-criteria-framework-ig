@@ -1,2 +1,2 @@
-# fhir-outcome-criteria-framework-ig
-The Outcome Criteria Framework Implementation Guide defines a reproducible method and a formalism for representing condition outcome definitions and criteria, such that the representations can be reused across different use cases.
+# sample-ig
+A sample, template-driven implementation guide that provides a starting environment to use a base for defining new IGs

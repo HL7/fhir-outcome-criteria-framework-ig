@@ -1,0 +1,46 @@
+{
+  "resourceType": "Library",
+  "id": "depressionMeasure",
+  "version": "1",
+  "name": "Depression Measure Library",
+  "title": "Depression Measure Library",
+  "status": "draft",
+  "type": {
+    "coding": [
+      {
+        "code": "logic-library"
+      }
+    ]
+  },
+  "date": "2020-05-01",
+  "description": "Depression Measure Library ...",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US"
+        }
+      ]
+    }
+  ],
+  "relatedArtifact": [
+    {
+      "type": "depends-on",
+      "resource": "Library/FHIRHelpers"
+    },
+    {
+      "type": "depends-on",
+      "resource": "Library/common-fhir"
+    },
+    {
+      "type": "depends-on",
+      "resource": "Library/depressionOutcomes"
+    }
+  ],
+  "content": [
+    {
+      "id": "ig-loader-depressionMeasure.cql"
+    }
+  ]
+}

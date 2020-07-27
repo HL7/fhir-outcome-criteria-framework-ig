@@ -1,0 +1,69 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../src-generated/schemas/fhir-single.xsd">
+  <a name="introduction"> </a>
+  <h3>Introduction</h3>
+  <p>Here's where we give an overview of how the depression examples are organized, and point to specific examples</p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>Discuss each artifact individually</li>
+    <li>Discuss how they all come together</li>
+    <li>...</li>
+  </ul>
+
+
+  <a name="FHIRLibrary_depressionOutcomes"> </a>
+  <h3>FHIR Library: depressionOutcomes</h3>
+  <p>
+    FHIR Library: depressionOutcomes
+  </p>
+  <img src="FHIRLibrary_depressionOutcomes.png" alt="FHIRLibrary_depressionOutcomes" height="326" width="563"/>
+  <p> </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>...</li>
+  </ul>
+
+  <a name="CQL_depressionOutcomes"> </a>
+  <h3>CQL Library: depressionOutcomes</h3>
+  <p>
+    CQL Library: depressionOutcomes
+  </p>
+  <img src="CQL_depressionOutcomes.png" alt="CQL_depressionOutcomes" height="326" width="563"/>
+  <p> </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>...</li>
+  </ul>
+
+  <a name="FHIRMeasure_depressionMeasure"> </a>
+  <h3>FHIR Measure: depressionMeasure</h3>
+  <p>
+    FHIR Measure: depressionMeasure
+  </p>
+  <img src="FHIRMeasure_depressionMeasure.png" alt="FHIRMeasure_depressionMeasure" height="326" width="563"/>
+  <p> </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>...</li>
+  </ul>
+
+  <a name="FHIRLibrary_depressionMeasure"> </a>
+  <h3>FHIR Library: depressionMeasure</h3>
+  <p>
+    FHIR Library: depressionMeasure
+  </p>
+  <img src="FHIRLibrary_depressionMeasure.png" alt="FHIRLibrary_depressionMeasure" height="326" width="563"/>
+  <p> </p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>...</li>
+  </ul>
+
+  <a name="summary"> </a>
+  <h3>Putting all the Pieces Together</h3>
+  <p>Here's where we'll describe how all the above components come together...</p>
+  <p>Things we'll cover...</p>
+  <ul>
+    <li>...</li>
+  </ul>
+
+</div>

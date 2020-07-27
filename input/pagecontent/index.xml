@@ -1,0 +1,42 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../input-cache/schemas/R5/fhir-single.xsd">
+  <a name="introduction"> </a>
+  <h3>Introduction</h3>
+  <p>
+    Using the <a href="https://effectivehealthcare.ahrq.gov/products/registry-of-patient-registries/outcome-measures-framework">AHRQ Outcome Measures Framework (OMF)</a>, expert panels have converged on a core set of outcome definitions and criteria for a number of conditions, including Depression, Asthma, Lung Cancer, Lumbar Spondylolisthesis, and others. Depression outcomes include such items as 'improvement in depressive symptoms', 'suicidal ideation', and 'work productivity'. Lung Cancer outcomes include such items as 'progression', 'disease-free survival', 'healthcare utilization'. Asthma outcomes include such items as 'exacerbation', 'asthma control', 'quality of life'. As one might expect, different groups with different use cases (e.g. research, quality measurement, clinical decision support) might define these outcomes differently. Learning Health Systems are hampered by differences in formal definitions across quality measurements, decision support, research, and direct patient care. These differences further add to provider data capture burden, and impede our ability to reuse data generated in the process of patient care.
+</p>
+<p>This Implementation Guide defines a reproducible method and a formalism for representing outcome definitions and criteria, such that the criteria can be reused across different use cases. The guide aligns with the United States' direction in formalizing quality measures and decision support rules, so that a common set of definitions can be used across quality measurement, decision support, research, and patient care; and so that we are better able to extract and use data captured in the process of patient care.
+</p>
+<p>
+  A rich set of examples are included, based on OMF Depression outcome measures, that demonstrate the framework and illustrate how a core set of concrete definitions, expressed in FHIR and based on QI Core and CQL, can be computationally leveraged by many different types of artifacts such as quality measures.
+</p>
+
+  <a name="background"> </a>
+  <h3>Background</h3>
+  <p>This project continues the work of the <a href="https://effectivehealthcare.ahrq.gov/products/registry-of-patient-registries/outcome-measures-framework">AHRQ Outcome Measures Framework (OMF)</a> by providing a reproducible framework for formalizing outcome definitions, such as those defined by OMF expert panels for Depression, Asthma, Lung Cancer, Lumbar Spondylolisthesis, and others.
+</p>
+<p>AHRQ's goal is the development of common, conceptual models for classifying the range of outcomes that are relevant to patients and providers across most conditions, using a stakeholder-driven process incorporating iterative rounds of review and revision across multiple condition areas.
+  </p>
+  <p>This process is depicted here:</p>
+    <img src="omf.png" alt="Overview of the AHRQ OMF process"/>
+    <p> </p>
+<p>The AHRQ OMF process has been applied to multiple conditions, including Depression, Asthma, Lung Cancer, Lumbar Spondylolisthesis, and Atrial Fibrillation. For each condition, outcome definitions defined by expert panels have been mapped to FHIR and standard terminologies, and criteria for each outcome have been defined using a non-computable 'pseudologic' format. </p>
+<p>And while stakeholders have expressed enthusiasm for the overall process, they have identified several potential barriers: [1] How difficult will it be to extract the necessary data from different EHRs? [2] Is capture of the outcomes on a regular basis too burdensome for patients and clinicians? [3] Are the specific measures useful for informing clinical decision-making and understanding and improving patient outcomes? [4] Will capture of the harmonized outcome measures improve the utility of the registry data for conducting patient-centered outcomes research?
+</p>
+<p>This Implementation Guide is conceived as addressing these stakeholder identified barriers. Here, we provide a reproducible framework that not only formalizes outcome definitions, but does so in a way that is aligned with prominent healthcare interoperability standards, and aligns with the quality reporting process and the normal process of care so as to minimize provider data capture burden, and so as to increase the prospects of data reuse.</p>
+<p></p>
+  <p>This work is supported by the Office of the Secretary Patient-Centered Outcomes Research Trust Fund under Interagency Agreement 18-596R-18 through Agency for Healthcare Research and Quality contract no. 75Q80119C00005.
+</p>
+
+<a name="open"> </a>
+<h3>Open Issues</h3>
+<p>This section will be removed prior to ballot. It's just a temporary place to store open issues...
+</p>
+<ul>
+  <li>How to get CQL to render?</li>
+  <li>Draft narrative for each page</li>
+  <li>Do we want to specify conformance criteria?</li>
+  <li>...</li>
+  <li>...</li>
+</ul>
+
+</div>

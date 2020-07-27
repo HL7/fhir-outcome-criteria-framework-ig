@@ -1,0 +1,38 @@
+{
+  "resourceType": "Library",
+  "id": "depressionOutcomes",
+  "version": "1",
+  "name": "Depression Outcomes Library",
+  "title": "Depression Outcomes Library",
+  "status": "draft",
+  "type": {
+    "coding": [
+      {
+        "code": "logic-library"
+      }
+    ]
+  },
+  "date": "2020-05-01",
+  "description": "Depression Outcomes Library ...",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US"
+        }
+      ]
+    }
+  ],
+  "relatedArtifact": [
+    {
+      "type": "depends-on",
+      "resource": "Library/FHIRHelpers"
+    }
+  ],
+  "content": [
+    {
+      "id": "ig-loader-depressionOutcomes.cql"
+    }
+  ]
+}

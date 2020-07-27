@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ImplementationGuide xmlns="http://hl7.org/fhir">
+	<id value="outcomecriteriaframework"/>
+	<url value="http://hl7.org/fhir/us/outcomecriteriaframework"/>
+	<!-- This version will propagate to all artifacts unless the "propagate-version" extension is overridden -->
+	<version value="1.0"/>
+	<name value="outcomeCriteriaFramework"/>
+	<title value="Outcome Criteria Framework"/>
+	<status value="draft"/>
+	<experimental value="false"/>
+	<publisher value="AHRQ"/>
+	<description value="description of this guide..."/>
+	<jurisdiction>
+		<coding>
+			<system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+			<code value="840"/>
+		</coding>
+	</jurisdiction>
+	<packageId value="hl7.fhir.us.outcomecriteriaframework"/>
+	<fhirVersion value="4.0.1"/>
+	<definition>
+		<grouping id="normative">
+			<name value="Normative content"/>
+			<description value="Grouping of ballotable content"/>
+		</grouping>
+		<grouping id="examples">
+			<name value="Examples"/>
+			<description value="The following examples are included:"/>
+		</grouping>
+		<resource>
+			<reference>
+				<reference value="Library/depressionOutcomes"/>
+			</reference>
+			<name value="Depression Outcomes Library"/>
+			<description value="DepressionOutcomesLibrary description..."/>
+			<exampleBoolean value="true"/>
+			<groupingId value="examples"/>
+		</resource>
+		<resource>
+			<reference>
+				<reference value="Library/depressionMeasure"/>
+			</reference>
+			<name value="Depression Measure Library"/>
+			<description value="DepressionMeasureLibrary description..."/>
+			<exampleBoolean value="true"/>
+			<groupingId value="examples"/>
+		</resource>
+		<resource>
+			<reference>
+				<reference value="Measure/depression"/>
+			</reference>
+			<name value="Depression Measure"/>
+			<description value="DepressionMeasure description..."/>
+			<exampleBoolean value="true"/>
+			<groupingId value="examples"/>
+		</resource>
+		<page>
+			<nameUrl value="toc.html"/>
+			<title value="Table of Contents"/>
+			<generation value="html"/>
+			<page>
+				<nameUrl value="index.html"/>
+				<title value="IG Home Page"/>
+				<generation value="html"/>
+			</page>
+      <page>
+				<nameUrl value="framework.html"/>
+				<title value="Framework"/>
+				<generation value="html"/>
+			</page>
+			<page>
+				<nameUrl value="examples.html"/>
+				<title value="Examples"/>
+				<generation value="html"/>
+				<page>
+					<nameUrl value="depressionExample.html"/>
+					<title value="Depression Example"/>
+					<generation value="html"/>
+				</page>
+			</page>
+		</page>
+		<!-- copyright year is a mandatory parameter -->
+		<parameter>
+			<code value="copyrightyear"/>
+			<value value="2020+"/>
+		</parameter>
+		<parameter>
+      <code value="releaselabel"/>
+      <value value="CI Build"/>
+    </parameter>
+    <parameter>
+      <code value="find-other-resources"/>
+      <value value="true"/>
+    </parameter>
+    <parameter>
+      <code value="path-binary"/>
+      <value value="input\cql"/>
+    </parameter>
+	</definition>
+</ImplementationGuide>
