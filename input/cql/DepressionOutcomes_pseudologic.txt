@@ -112,7 +112,7 @@ and start of Global."Normalize Interval"(MajorDepressionOrDysthmia.onset) before
 return FirstPHQ9_GT9
 // pseudo: Outcome: Improvement in Depressive Symptoms - Remission (category=clinical response)
 // pseudo: Time is anchored at the first PHQ-9 > 9 during the measurement period. Age > 18
-// pseudo: and presence of conditions must be present at time of PHQ-9>9 (and need not be present at start of measurement period). 
+// pseudo: and presence of conditions must be present at time of PHQ-9>9 (and need not be present at start of measurement period). 
 // 6/8 note: changed to use onset instad of recordedDate
 
 define "PHQ-9 LT 5 Observation":
@@ -237,47 +237,78 @@ exists (
 //      exists "Depression"
 //      Depression.onset < start of measurement period
 //      Depression.abatement > start of measurement period or null
-//
 // Has depression treatment related AdverseEvent or Procedure complication:
 //
 // AdverseEvent
 //  - actuality = 'actual'
-//  - date in measurement period
-//  - suspectEntity.instance.medication.code in Depression Medications; OR
-//       suspectEntity.instance.medicationAdministration.medicationCodeableConcept in Depression Medications; OR    
-//       suspectEntity.instance.medicationAdministration.medicationReference.medication.code in Depression Medications; OR   
+//  - suspectEntity.instance.medicationAdministration.medicationCodeableConcept in Depression Medications; OR    
 //       suspectEntity.instance.medicationStatement.medicationCodeableConcept in Depression Medications; OR
-//       suspectEntity.instance.medicationStatement.medicationReference.medication.code in Depression Medications; OR
 //       suspectEntity.instance.procedure.reasonCode in Depression Condition; OR
-//       suspectEntity.instance.procedure.reasonReference.condition.code in Depression Condition
 //
 // Procedure
 //  - status 'in-progress', 'stopped', 'completed'
-//  - performedDateTime or performedPeriod in measurement period
-//  - reasonCode or reasonReference.condition.code in Depression Condition
-//  - complication is not null AND/OR complicationDetail is not null
-
+//  - reasonCode in Depression Condition
+//  - complication is not null OR complicationDetail is not null
 
 
 //Outcome: 12mo Depression treatment-related Adverse Events (category=event of interest)
 //define "12mo Depression treatment-related Adverse Events":
-
-
-
-
+//  - For adverse event: AdverseEvent.date in 12mo measurement period
+//  - For procedure: Procedure.performedDateTime or Procedure.performedPeriod in 12mo measurement period
 
 
 //Outcome: Suicide Ideation and Behavior (category=event of interest)
 //define "Suicide Ideation and Behavior":
+// - Observation
+//   - status: in (preliminary, final, amended, corrected)
+//   - code: LOINC 44260-8 (https://loinc.org/44260-8/)
+//   - valueCodeableConcept: in (LA6569-3; LA6570-1; LA6571-9)
+
+
+//Outcome: 12mo Suicide Ideation and Behavior (category=event of interest)
+//define "12mo Suicide Ideation and Behavior":
+//   - effectiveDateTime: in 12mo measurement period
 
 
 //Outcome: Depression-specific Quality of Life (category=patient reported)
 //define "Depression-specific Quality of Life":
+// (criteria is that QOL was assessed using a validated instrument)
+// - Observation
+//   - status: in (preliminary, final, amended, corrected)
+//   - code: in “Depression-specific QOL Assessment” value set
+
+
+//Outcome: 12mo Depression-specific Quality of Life (category=patient reported)
+//define "12mo Depression-specific Quality of Life":
+//   - effectiveDateTime: in 12mo measurement period
 
 
 //Outcome: Depression-related Resource Utilization (category=resource utilization)
 //define "Depression-related Resource Utilization":
+// (Retrieve claims related to depression)
+//  - Claim
+//    - status:'active'
+//    - Use:'claim'
+//    - diagnosis
+//      - diagnosisCodeableConcept: in “Depression Condition” Value Set
+
+
+//Outcome: 12mo Depression-related Resource Utilization (category=resource utilization)
+//define "12mo Depression-related Resource Utilization":
+// - claim.created in 12mo measurement period
 
 
 //Outcome: Work Productivity (category=resource utilization)
 //define "Work Productivity":
+// (criteria: at least two observations in time window, where latest has higher value than earliest)
+// - Observation
+//   - status: in (preliminary, final, amended, corrected)
+//   - code: WPAI Item 5
+//   - effectiveTime
+//   - valueQuantity
+
+
+//Outcome: 12mo Work Productivity (category=resource utilization)
+//define "12mo Work Productivity":
+//   - effectiveDateTime: in 12mo measurement period
+
