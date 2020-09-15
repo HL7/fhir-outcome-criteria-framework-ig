@@ -32,7 +32,7 @@
 				<reference value="Library/depressionOutcomes"/>
 			</reference>
 			<name value="Depression Outcomes Library"/>
-			<description value="DepressionOutcomesLibrary description..."/>
+			<description value="Contains a CQL library that encodes depression outcome criteria as defined by the AHRQ expert panel."/>
 			<exampleBoolean value="true"/>
 			<groupingId value="examples"/>
 		</resource>
@@ -41,16 +41,34 @@
 				<reference value="Library/depressionMeasure"/>
 			</reference>
 			<name value="Depression Measure Library"/>
-			<description value="DepressionMeasureLibrary description..."/>
+			<description value="Contains a CQL library that encodes measure-specific criteria (such as Denominator criteria)."/>
 			<exampleBoolean value="true"/>
 			<groupingId value="examples"/>
 		</resource>
 		<resource>
 			<reference>
-				<reference value="Measure/depression"/>
+				<reference value="Library/depressionIntervention"/>
+			</reference>
+			<name value="Depression Intervention Library"/>
+			<description value="Contains a CQL library that encodes decision support criteria (such as Trigger criteria)."/>
+			<exampleBoolean value="true"/>
+			<groupingId value="examples"/>
+		</resource>
+		<resource>
+			<reference>
+				<reference value="Measure/depressionMeasure"/>
 			</reference>
 			<name value="Depression Measure"/>
-			<description value="DepressionMeasure description..."/>
+			<description value="Defines a depression quality measure."/>
+			<exampleBoolean value="true"/>
+			<groupingId value="examples"/>
+		</resource>
+		<resource>
+			<reference>
+				<reference value="PlanDefinition/depressionIntervention"/>
+			</reference>
+			<name value="Depression Intervention"/>
+			<description value="Defines a depression 'event-condition-action' rule."/>
 			<exampleBoolean value="true"/>
 			<groupingId value="examples"/>
 		</resource>

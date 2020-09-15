@@ -23,20 +23,20 @@
 <p>And while stakeholders have expressed enthusiasm for the overall process, they have identified several potential barriers: [1] How difficult will it be to extract the necessary data from different EHRs? [2] Is capture of the outcomes on a regular basis too burdensome for patients and clinicians? [3] Are the specific measures useful for informing clinical decision-making and understanding and improving patient outcomes? [4] Will capture of the harmonized outcome measures improve the utility of the registry data for conducting patient-centered outcomes research?
 </p>
 <p>This Implementation Guide is conceived as addressing these stakeholder identified barriers. Here, we provide a reproducible framework that not only formalizes outcome definitions, but does so in a way that is aligned with prominent healthcare interoperability standards, and aligns with the quality reporting process and the normal process of care so as to minimize provider data capture burden, and so as to increase the prospects of data reuse.</p>
-<p></p>
   <p>This work is supported by the Office of the Secretary Patient-Centered Outcomes Research Trust Fund under Interagency Agreement 18-596R-18 through Agency for Healthcare Research and Quality contract no. 75Q80119C00005.
 </p>
 
-<a name="open"> </a>
-<h3>Open Issues</h3>
-<p>This section will be removed prior to ballot. It's just a temporary place to store open issues...
-</p>
+<a name="notes"> </a>
+<h3>Notes</h3>
+<p>Notes represent areas for which we are seeking targeted feedback. Notes will be removed from final publication. </p>
+<h4>Notes to connectathon testers</h4>
 <ul>
-  <li>How to get CQL to render?</li>
-  <li>Draft narrative for each page</li>
-  <li>Do we want to specify conformance criteria?</li>
-  <li>...</li>
-  <li>...</li>
+  <li>We are interested in targeted testing of the Depression example, including feedback related to FHIR representation and CQL expressions.</li>
+</ul>
+<h4>Notes to balloters</h4>
+<ul>
+  <li>The FMG would like feedback on whether this Implementation Guide should be balloted along a normative vs. informative track.</li>
+  <li>CQI would like feedback on whether it would be useful to define high level profiles that represent the major categories of outcomes (survival, clinical response, events of interest, patient reported, resource utilization)</li>
 </ul>
 
 </div>

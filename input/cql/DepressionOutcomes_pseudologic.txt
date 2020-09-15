@@ -237,24 +237,18 @@ exists (
 //      exists "Depression"
 //      Depression.onset < start of measurement period
 //      Depression.abatement > start of measurement period or null
-// Has depression treatment related AdverseEvent or Procedure complication:
+// Has depression treatment related AdverseEvent:
 //
 // AdverseEvent
 //  - actuality = 'actual'
 //  - suspectEntity.instance.medicationAdministration.medicationCodeableConcept in Depression Medications; OR    
 //       suspectEntity.instance.medicationStatement.medicationCodeableConcept in Depression Medications; OR
 //       suspectEntity.instance.procedure.reasonCode in Depression Condition; OR
-//
-// Procedure
-//  - status 'in-progress', 'stopped', 'completed'
-//  - reasonCode in Depression Condition
-//  - complication is not null OR complicationDetail is not null
 
 
 //Outcome: 12mo Depression treatment-related Adverse Events (category=event of interest)
 //define "12mo Depression treatment-related Adverse Events":
 //  - For adverse event: AdverseEvent.date in 12mo measurement period
-//  - For procedure: Procedure.performedDateTime or Procedure.performedPeriod in 12mo measurement period
 
 
 //Outcome: Suicide Ideation and Behavior (category=event of interest)

@@ -1,5 +1,5 @@
 <Measure xmlns="http://hl7.org/fhir">
-  <id value="depression"/>
+  <id value="depressionMeasure"/>
   <extension
              url="http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis">
     <valueCode value="Encounter"/>
@@ -43,7 +43,7 @@
     </resource>
   </relatedArtifact>
   <library>
-    <reference value="Library/depressionMeasureLibrary"/>
+    <reference value="Library/depressionMeasure"/>
   </library>
   <disclaimer value="..."/>
   <scoring>
