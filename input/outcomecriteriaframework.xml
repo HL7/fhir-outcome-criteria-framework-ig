@@ -74,7 +74,7 @@
 		</resource>
 		<resource>
 			<reference>
-				<reference value="PlanDefinition/depressionIntervention"/>
+				<reference value="PlanDefinition/depressionInterventionPlan"/>
 			</reference>
 			<name value="Depression Intervention"/>
 			<description value="Defines a depression 'event-condition-action' rule."/>

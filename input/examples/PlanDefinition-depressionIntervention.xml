@@ -1,5 +1,0 @@
-<PlanDefinition xmlns="http://hl7.org/fhir">
-  <id value="depressionIntervention"/> 
-  <status value="draft"/> 
-  <library value="Library/depressionIntervention"/> 
-</PlanDefinition> 

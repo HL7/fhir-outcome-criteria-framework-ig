@@ -41,7 +41,7 @@
         ]
       }
     }
-  ],  
+  ],
   "effectivePeriod": {
     "start": "2020-01-01",
     "end": "2021-12-31"
@@ -62,7 +62,7 @@
   ],
   "content": [
     {
-      "id": "ig-loader-depressionOutcomes.cql"
+      "id": "ig-loader-DepressionOutcomes.cql"
     }
   ]
 }

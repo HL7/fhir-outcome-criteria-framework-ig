@@ -41,7 +41,7 @@
         ]
       }
     }
-  ],  
+  ],
   "effectivePeriod": {
     "start": "2020-01-01",
     "end": "2021-12-31"
@@ -58,7 +58,7 @@
     {
       "type" : "depends-on",
       "resource" : "http://hl7.org/fhir/us/outcomecriteriaframework/Library/MATGlobalCommonFunctions|5.0.000"
-    },	
+    },
     {
       "type": "depends-on",
       "resource": "Library/depressionOutcomes"
@@ -66,7 +66,7 @@
   ],
   "content": [
     {
-      "id": "ig-loader-depressionIntervention.cql"
+      "id": "ig-loader-DepressionIntervention.cql"
     }
   ]
 }
