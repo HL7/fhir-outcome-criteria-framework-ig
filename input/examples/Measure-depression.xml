@@ -1,15 +1,5 @@
 <Measure xmlns="http://hl7.org/fhir">
-  <id value="depressionMeasure"/>
-  <extension
-             url="http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis">
-    <valueCode value="Encounter"/>
-  </extension>
-  <url value="http://hl7.org/fhir/us/cqfmeasures/Measure/depressionMeasure"/>
-  <identifier>
-    <use value="official"/>
-    <system value="http://example.org/fhir/cqi/ecqm/Measure/Identifier/exm"/>
-    <value value="146"/>
-  </identifier>
+  <id value="depression"/>
   <version value="1.0.0"/>
   <name value="Depression Measure"/>
   <title value="Depression measure"/>

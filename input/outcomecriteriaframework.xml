@@ -65,7 +65,7 @@
 		</resource>
 		<resource>
 			<reference>
-				<reference value="Measure/depressionMeasure"/>
+				<reference value="Measure/depression"/>
 			</reference>
 			<name value="Depression Measure"/>
 			<description value="Defines a depression quality measure."/>
