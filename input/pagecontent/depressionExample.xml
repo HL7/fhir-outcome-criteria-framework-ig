@@ -4,22 +4,22 @@
   <p>To better illustrate the Outcome Criteria Framework, this guide includes a comprehensive Depression Outcomes example, as illustrated by the following Figure. Sections that follow describe the components of this example.
 </p>
   <img src="DepressionExample.png" alt="DepressionExample"/>
-  
+
   <a name="FHIRLibrary_depressionOutcomes"> </a>
   <h3>FHIR Library: depressionOutcomes</h3>
   <p>
     Contains a CQL library that encodes depression outcome criteria as defined by the AHRQ expert panel.
   </p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>References CQL library: depressionOutcomes</li>
-	    <li>Deliberately redundant with referenced CQL's 'using', 'include', and 'valueset'.</li>
+	    <li>Deliberately redundant with referenced CQL's 'using' and 'include'.</li>
 	  </ul>
 	</li>
     <li>Adheres to normative semantic framework
 	  <ul>
-	    <li>Uses standardized metadata</li>
+	    <li>Conforms to OutcomeCriteriaFrameworkLibrary profile</li>
 	  </ul>
 	</li>
   </ul>
@@ -28,16 +28,17 @@
   <h3>CQL Library: depressionOutcomes</h3>
   <p>Encodes depression outcome criteria as defined by the AHRQ expert panel.</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>Wrapped in a FHIR Library resource</li>
 	    <li>CQL library is a stand-alone file</li>
-	    <li>Deliberately redundant with FHIR Library's dataRequirement and relatedArtifact fields.</li>
+	    <li>Deliberately redundant with FHIR Library's relatedArtifact (depends-on) field.</li>
 	  </ul>
 	</li>
     <li>Adheres to normative semantic framework
 	  <ul>
-	    <li>CQL logic addresses all attributes where isModifier=true</li>
+	    <li>CQL contains conformant declarations (library, identifier, version, code systems, value sets)</li>
+      <li>CQL logic addresses all attributes where isModifier=true</li>
 	    <li>QI Core is used as data model.</li>
 	  </ul>
 	</li>
@@ -54,7 +55,7 @@
   <h3>FHIR Measure: depression measure</h3>
   <p>Defines a depression quality measure.</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>References FHIR Library: depressionMeasure</li>
 	    <li>Expressions are contained in CQL library referenced by FHIR Library </li>
@@ -71,15 +72,15 @@
   <h3>FHIR Library: depressionMeasure</h3>
   <p>Contains a CQL library that encodes measure-specific criteria (such as Denominator criteria).</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>References CQL library: depressionMeasure</li>
-	    <li>Deliberately redundant with referenced CQL's 'using', 'include', and 'valueset'.</li>
+	    <li>Deliberately redundant with referenced CQL's 'using' and 'include'.</li>
 	  </ul>
 	</li>
     <li>Adheres to normative semantic framework
 	  <ul>
-	    <li>Uses standardized metadata</li>
+	    <li>Conforms to OutcomeCriteriaFrameworkLibrary profile</li>
 	  </ul>
 	</li>
   </ul>
@@ -88,15 +89,16 @@
   <h3>CQL Library: depressionMeasure</h3>
   <p>Encodes measure-specific criteria (such as Denominator criteria).</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>Wrapped in a FHIR Library resource</li>
 	    <li>CQL library is a stand-alone file</li>
-	    <li>Deliberately redundant with FHIR Library's dataRequirement and relatedArtifact fields.</li>
+	    <li>Deliberately redundant with FHIR Library's relatedArtifact (depends-on) field.</li>
 	  </ul>
 	</li>
     <li>Adheres to normative semantic framework
 	  <ul>
+      <li>CQL contains conformant declarations (library, identifier, version, code systems, value sets)</li>
 	    <li>CQL logic addresses all attributes where isModifier=true</li>
 	    <li>QI Core is used as data model</li>
 	  </ul>
@@ -114,7 +116,7 @@
   <h3>FHIR PlanDefinition: depression intervention</h3>
   <p>Defines a depression 'event-condition-action' rule.</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>References FHIR Library: depressionIntervention</li>
 	    <li>Expressions are contained in CQL library referenced by FHIR Library </li>
@@ -131,15 +133,15 @@
   <h3>FHIR Library: depressionIntervention</h3>
   <p>Contains a CQL library that encodes decision support criteria (such as Trigger criteria).</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>References CQL library: depressionIntervention</li>
-	    <li>Deliberately redundant with referenced CQL's 'using', 'include', and 'valueset'.</li>
+	    <li>Deliberately redundant with referenced CQL's 'using' and 'include'.</li>
 	  </ul>
 	</li>
     <li>Adheres to normative semantic framework
 	  <ul>
-	    <li>Uses standardized metadata</li>
+	    <li>Conforms to OutcomeCriteriaFrameworkLibrary profile</li>
 	  </ul>
 	</li>
   </ul>
@@ -148,15 +150,16 @@
   <h3>CQL Library: depressionIntervention</h3>
     <p>Encodes decision support criteria (such as Trigger criteria).</p>
   <ul>
-    <li>Adheres to normative organization framework
+    <li>Adheres to normative organizational framework
 	  <ul>
 	    <li>Wrapped in a FHIR Library resource</li>
 	    <li>CQL library is a stand-alone file</li>
-	    <li>Deliberately redundant with FHIR Library's dataRequirement and relatedArtifact fields. </li>
+	    <li>Deliberately redundant with FHIR Library's relatedArtifact (depends-on) field. </li>
 	  </ul>
 	</li>
     <li>Adheres to normative semantic framework
 	  <ul>
+      <li>CQL contains conformant declarations (library, identifier, version, code systems, value sets)</li>
 	    <li>CQL logic addresses all attributes where isModifier=true</li>
 	    <li>QI Core is used as data model. </li>
 	  </ul>

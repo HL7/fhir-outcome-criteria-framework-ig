@@ -7,51 +7,48 @@
   <img src="overview.png" alt="Overview of what we're doing"/>
 
   <a name="NORMorg"> </a>
-  <h3>Normative organization framework</h3>
+  <h3>Normative organizational framework</h3>
   <p>
-    The following are normative constraints per this guide:</p>
+    The following normative conformance criteria relate to the inter-relationships between CQL libraries, FHIR Libraries, and FHIR resources that contain CQL expressions.</p>
   <ul>
-    <li>FHIR resources reference 0..* FHIR Library</li>
-    <li>No FHIR resource other than the FHIR Library resource makes a direct CQL reference. </li>
-    <li>Asserted expressions within a FHIR resource are contained in CQL library referenced by FHIR Library</li>
-    <li>FHIR Library references 1..1 CQL library</li>
-    <li>Each CQL library is wrapped in a FHIR Library</li>
-    <li>A CQL library is a stand-alone file, not encoded within a FHIR Library</li>
-    <li>Deliberate redundancy is defined for select fields in FHIR Library and CQL library, as shown in the following table - former is for library management whereas latter is for code execution.</li>
+    <li><b>Conformance Requirement 'Referencing a FHIR Library': </b>A FHIR resource may reference 0..* FHIR Library.</li>
+    <li><b>Conformance Requirement 'Referencing a CQL library': </b> No FHIR resource other than the FHIR Library resource shall directly reference a CQL library. A FHIR library shall reference exactly one CQL library.</li>
+    <li><b>Conformance Requirement 'CQL expressions in a FHIR resource': </b>Asserted CQL expressions within a FHIR resource shall be contained in the CQL library that is referenced by the resource's referenced FHIR Library.</li>
+    <li><b>Conformance Requirement 'CQL library is stand-alone': </b>A CQL library shall be a stand-alone file. Every CQL library shall be referenced by exactly one FHIR Library.</li>
+    <li><b>Conformance Requirement 'FHIR Library - CQL library redundancy': </b>CQL library 'using' and 'include' clauses shall be redundantly representedg in the referencing FHIR Library using Library.relatedArtifact (depends-on).</li>
   </ul>
-  <table>
-    <tr><th>FHIR Library</th><th>CQL library</th></tr>
-    <tr><td>dataRequirement</td><td>using (e.g. using FHIR version '4.0.1)</td></tr>
-    <tr><td>relatedArtifact (depends-on)</td><td>include (e.g. include FHIRHelpers version '4.0.1')</td></tr>
-    <tr><td>dataRequirement</td><td>valueset (e.g. valueset "Depression Condition": 'http://ct...)</td></tr>  
-  </table>
-  
+
   <a name="NORMsemantic"> </a>
   <h3>Normative semantic framework</h3>
   <p>
-    The following are normative constraints per this guide:</p>
+    The following normative conformance criteria relate to fields and field values with CQL libraries, FHIR Libraries, and FHIR resources that contain CQL expressions</p>
   <ul>
-    <li>FHIR Library uses standardized metadata</li>
-    <li>CQL must address all attributes where isModifier=true</li>
-    <li>CQL must adhere to the following constraints, taken from the <a href="http://hl7.org/fhir/us/cqfmeasures/using-cql.html">Quality Measure IG</a>
-	   <ul>
-	      <li><a href="http://hl7.org/fhir/us/cqfmeasures/using-cql.html#conformance-requirement-18">Conformance Requirement 18 (Library Declaration)</a></li>
-	      <li><a href="http://hl7.org/fhir/us/cqfmeasures/using-cql.html#conformance-requirement-19">Conformance Requirement 19 (Library Versioning)</a></li>
-	      <li><a href="http://hl7.org/fhir/us/cqfmeasures/using-cql.html#conformance-requirement-23">Conformance Requirement 23 (Code System Specification)</a></li>
-	      <li><a href="http://hl7.org/fhir/us/cqfmeasures/using-cql.html#conformance-requirement-24">Conformance Requirement 24 (Value Set Specification)</a></li>
-	   </ul>
-	</li>
-    <li>eCQM: Use FHIR Measure resource</li>
-    <li>CDS: Use FHIR PlanDefinition; FHIR ActivityDefinition resources</li>
-    <li>Research: Use FHIR ResearchDefinition; FHIR ResearchElementDefinition resources</li>
-    <li>QI Core used as data model where possible. Else, use US Core.</li>
+    <li>CQL conformance criteria
+      <ul>
+        <li><b>Conformance Requirement 'Library declaration': </b>A CQL library must contain a library declaration line as the first line of the library.</li>
+        <li><b>Conformance Requirement 'Library identifier': </b>A CQL library identifier shall be a valid un-quoted identifier and shall not contain underscores.</li>
+        <li><b>Conformance Requirement 'Library versioning': </b>A CQL library declaration line shall contain a version number. The library version number SHALL follow the convention: &lt;major>.&lt;minor>.&lt;patch ></li>
+        <li><b>Conformance Requirement 'Code system specification': </b>The identifier of any code system reference shall be specified using a URI for the code system. The URI shall be the canonical URL for the code system. The Code System declaration may include a version, consistent with the URI specification for FHIR and the code system.</li>
+        <li><b>Conformance Requirement 'Value set specification': </b>The identifier of any value set reference shall be specified using a URI for the value set. The URI shall be the canonical URL for the value set. The URI may include a version, consistent with versioned canonical URL references in FHIR.</li>
+        <li><b>Conformance Requirement 'Data model specification': </b>Expressions within a CQL library shall reference a single data model, that shall be declared with the CQL 'using' clause. The data model should be QI Core.</li>
+        <li><b>Conformance Requirement 'Scope': </b>CQL definitions based on a FHIR resource or profile shall explicitly address each attribute whose isModifier=true.</li>
+      </ul>
+    </li>
+    <li>FHIR Library conformance criteria: See OutcomeCriteriaFrameworkLibrary profile. </li>
+    <li>FHIR resource conformance criteria
+      <ul>
+        <li><b>Conformance Requirement 'Quality Measurement FHIR resources': </b>Inclusion of CQL expressions into electronic clinical quality measures should be via the FHIR Measure resource, which references a FHIR Library that references the CQL library defining those expressions.</li>
+        <li><b>Conformance Requirement 'Clinical Decision Support FHIR resources': </b>Inclusion of CQL expressions into clinical decision support rules should be via the FHIR PlanDefinition, ActivityDefinition resources, which references a FHIR Library that references the CQL library defining those expressions.</li>
+        <li><b>Conformance Requirement 'Research FHIR resources': </b>Inclusion of CQL expressions into clinical research rules should be via the FHIR ResearchDefinition, ResearchElementDefitions resources, which references a FHIR Library that references the CQL library defining those expressions.</li>
+      </ul>
+    </li>
   </ul>
 
   <a name="NonNORM"> </a>
   <h3>Non-normative guidance</h3>
   <p>
     Non-normative guidance is focused on considerations that maximize reusability. The considerations are non-normative because exceptions exist, insufficient use cases have been analyzed, and because the rules are more fuzzy and therefore less amenable to computational validation. </p>
-  <h4>Considerations for maximizing reusability</h4>	
+  <h4>Considerations for maximizing reusability</h4>
   <ul>
     <li><b>Timing</b>: We want to enable users to have the option to either select their own measure intervals or use canned intervals that are baked into core definitions. Therefore, our general approach will be to create both time-neutral (e.g. 'All-cause mortality') and time-specified (e.g. '12 month all-cause mortality') definitions. </li>
     <li><b>Status</b>: We want to enable users to have some flexibility in cohorts with respect to condition status. Therefore, our general approach will be to NOT include condition status constraints in core definitions unless clearly required. For instance, the definition of 'Depression' does not include a constraint that Depression be active, since there may be cases where a group wants to study events that occur amongst patients whose depression is in remission.</li>

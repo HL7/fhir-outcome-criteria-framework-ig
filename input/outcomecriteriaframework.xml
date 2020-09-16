@@ -29,6 +29,15 @@
 		</grouping>
 		<resource>
 			<reference>
+				<reference value="StructureDefinition/OutcomeCriteriaFrameworkLibrary"/>
+			</reference>
+			<name value="Outcome Criteria Framework Library"/>
+			<description value="Constrained FHIR Library profile"/>
+			<exampleBoolean value="false"/>
+			<groupingId value="normative"/>
+		</resource>
+		<resource>
+			<reference>
 				<reference value="Library/depressionOutcomes"/>
 			</reference>
 			<name value="Depression Outcomes Library"/>
