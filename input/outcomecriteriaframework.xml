@@ -9,7 +9,7 @@
 	<status value="draft"/>
 	<experimental value="false"/>
 	<publisher value="AHRQ"/>
-	<description value="description of this guide..."/>
+	<description value="This is a description of this guide..."/>
 	<jurisdiction>
 		<coding>
 			<system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
