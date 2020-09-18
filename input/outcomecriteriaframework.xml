@@ -123,5 +123,9 @@
       <code value="path-binary"/>
       <value value="input\cql"/>
     </parameter>
+		<parameter>
+      <code value="path-liquid"/>
+      <value value="templates\liquid"/>
+    </parameter>
 	</definition>
 </ImplementationGuide>
