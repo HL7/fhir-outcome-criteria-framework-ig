@@ -8,301 +8,112 @@ include FHIRHelpers version '4.0.1'
 include MATGlobalCommonFunctions version '5.0.000' called Global
 
 ----------------
+----------------
 value sets
+----------------
 ----------------
 Conditions/Findings
  - Depression Condition
  - Dysthymia Condition
- - Expired (re-use from Afib)
+ - Expired
  - Major Depression Condition
- - Suicide Condition 
+ - Suicide Condition
  - Suicidality Condition
 Medications
  - Depression Medications
-Observables
- - PHQ-9 Total Score Observable
- - PHQ-9 Item 9 Observable
- - WPAI Questionnaire Item 5 Observable
- - Depression-specific QOL Observable
 
+----------------
+----------------
+parameters
+----------------
+----------------
+ - "Measurement Period" Interval<DateTime>
 
-code "Dead": '419099009' from "SNOMEDCT" display 'Dead (finding)'
-// This is a place holder, need to find the proper code for suicide death
-code "Suicide": '419099009' from "SNOMEDCT" display 'Dead (finding)'
-code "Birthdate": '21112-8' from "LOINC" display 'Birth date'
+----------------
+----------------
+context
+----------------
+----------------
+ - context Patient
 
-parameter "Measurement Period" Interval<DateTime>
-  default Interval[@2020-01-01T00:00:00.0, @2021-01-01T00:00:00.0)
+----------------
+----------------
+Base definitions
+----------------
+----------------
+//Base definition: "Depression"
+- condition(code in "Depression Condition"; verificationStatus is 'confirmed' or null)
 
-context Patient
+//Base definition: "Major Depression or Dysthmia":
+- condition(code in "Dysthymia Condition" or "Major Depression Condition"; verificationStatus is 'confirmed' or null)
 
-//Base definition: Depression condition
-define "Depression":
-["Condition": "Depression Condition"] Depression
-where Depression.verificationStatus = Global."confirmed"
-or Depression.verificationStatus is null
-// pseudo: verificationStatus is confirmed or null
+//Base definition: "PHQ-9 GT 9 Observation":
+ - observation(code is "PHQ-9 Total Score Observation"]; status is 'final'; valueQuantity>9)
+ 
+//Base definition: "First PHQ-9 GT 9 Observation":
+ - first "PHQ-9 GT 9 Observation" during "Measurement Period"
 
-//Outcome: All-cause mortality (category=survival)
-define "All-cause Mortality":
-["Condition": "Dead"] Expired
-where Expired.verificationStatus = Global."confirmed"
-or Expired.verificationStatus is null
-// pseudo: Expired.verificationStatus is confirmed or null
+//Base definition: "PHQ-9 Observation":
+ - observation(code is "PHQ-9 Total Score Observation"]; status is 'final')
 
-//Outcome: 12-mo All-cause mortality (category=survival)
-define "12mo All-cause Mortality":
-"All-cause Mortality" AllCauseMortality
-where Global."Normalize Interval"(AllCauseMortality.onset) during "12mo Measurement Window"
-// pseudo: exists "All-cause Mortality"
-// pseudo: Expired.onset > start of measurement period
-// pseudo: Expired.onset < start of measurement period +12mo
+----------------
+----------------
+Outcomes
+----------------
+----------------
+//Outcome: "All-cause Mortality":
+- condition(code in "Expired"; verificationStatus is 'confirmed' or null)
 
-define "12mo Measurement Window":
-Interval[start of "Measurement Period", start of "Measurement Period" + 12 months)
+//Outcome: "12mo All-cause Mortality":
+ - "All-cause Mortality" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
-define "Major Depression or Dysthmia":
-(["Condition": "Major Depression Condition"]
- union ["Condition": "Dysthmia Condition"]) MajorDepressionOrDysthmia
- where MajorDepressionOrDysthmia.verificationStatus = Global."confirmed"
- or MajorDepressionOrDysthmia.verificationStatus is null
+//Outcome: "Death from Suicide":
+ - "Major Depression or Dysthmia"; and
+ - condition(code in "Suicide"; verificationStatus is 'confirmed' or null)
 
-//Outcome: Death from Suicide (category=survival)
-define "Death from Suicide":
-["Condition": "Suicide"] SuicideDeath with "Major Depression or Dysthmia" MajorDepressionOrDysthmia
-such that (SuicideDeath.verificationStatus = Global."confirmed"
-or SuicideDeath.verificationStatus is null) and MajorDepressionOrDysthmia is not null
-// pseudo: exists (["Condition": "Major Depression Condition"] OR exists (["Condition": "Dysthmia Condition"]) MajorDepressionOrDysthmia
-// pseudo: MajorDepressionOrDysthmia.verificationStatus is confirmed or null
-// pseudo: exists (["Condition": "Suicide Condition"] Suicide
-// pseudo: Suicide.verificationStatus is confirmed or null
+//Outcome: "12mo Death from Suicide":
+ - "Death from Suicide" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
-//Outcome: 12-mo Death from Suicide (category=survival)
-define "12mo Death from Suicide":
-"Death from Suicide" SuicideDeath
-where Global."Normalize Interval"(SuicideDeath.onset) during "12mo Measurement Window"
-// pseudo: exists "Death from Suicide"
-// pseudo: Suicide.onset > start of measurement period
-// pseudo: Suicide.onset < start of measurement period +12mo
+//Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Remission":
+ - see graphic
 
-//Base definition: PHQ-9 gt 9 observation exists
-define "PHQ-9 GT 9 Observation":
-["Observation": "PHQ-9 Total Score Observation"] PHQ9_GT9
-where PHQ9_GT9.status = 'final'
-and PHQ9_GT9.value as Quantity > 9
-// pseudo: PHQ9.status is 'final'
-// pseudo: PHQ9.valueQuantity > 9
+//Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Response":
+ - see graphic
 
-define "First PHQ-9 GT 9 Observation":
-{First ("PHQ-9 GT 9 Observation" FirstPHQ9_GT9
-where Global."Normalize Interval"(FirstPHQ9_GT9.effective) during "Measurement Period")
-}
-// pseudo: exists ('PHQ-9 GT 9 Observation', PHQ9_GT9.effectiveDateTime) in measurement period
-// pseudo: Set TimeT = First('PHQ-9 GT 9 Observation', PHQ9_GT9.effectiveDateTime) in measurement period
-// 6/8 note: changed from FHIRT to LAST, when there are multiple PHQ-9s in this window, use the most recent PHQ-9
+//Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Recurrence":
+ - see graphic
 
-//define "Improvement in Depressive Symptoms Remission":
-define "First PHQ-9 GT 9 Adult with Depression Dysthmia":
-from
-"First PHQ-9 GT 9 Observation" FirstPHQ9_GT9,
-["Patient"] BirthDate,
-"Major Depression or Dysthmia" MajorDepressionOrDysthmia
-where Global.CalendarAgeInYearsAt(FHIRHelpers.ToDate(Patient.birthDate), start of Global."Normalize Interval"(FirstPHQ9_GT9.effective)) >= 18
-and start of Global."Normalize Interval"(MajorDepressionOrDysthmia.onset) before start of Global."Normalize Interval"(FirstPHQ9_GT9.effective)
-return FirstPHQ9_GT9
-// pseudo: Outcome: Improvement in Depressive Symptoms - Remission (category=clinical response)
-// pseudo: Time is anchored at the first PHQ-9 > 9 during the measurement period. Age > 18
-// pseudo: and presence of conditions must be present at time of PHQ-9>9 (and need not be present at start of measurement period). 
-// 6/8 note: changed to use onset instad of recordedDate
+//Outcome: "Depression treatment-related Adverse Events":
+ - "Depression"(onset < start of measurement period; abatement > start of measurement period or null); and
+ - AdverseEvent(actuality is 'actual'; suspectEntity.instance.medication.code in "Depression Medications")
 
-define "PHQ-9 LT 5 Observation":
-["Observation": "PHQ-9 Total Score Observation"] PHQ9_LT5
-where PHQ9_LT5.status = 'final'
-and PHQ9_LT5.value as Quantity < 5
-// pseudo: PHQ9_LT5.status is 'final'
-// pseudo: PHQ9_LT5.valueQuantity < 5
-// 6/8 note: Remission is defined as PHQ-9 of <5
+//Outcome: "12mo Depression treatment-related Adverse Events"
+ - "Depression treatment-related Adverse Events" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
-define "PHQ-9 Observation":
-["Observation": "PHQ-9 Total Score Observation"] PHQ9_GT9
-where PHQ9_GT9.status = 'final'
+//Outcome: "Suicide Ideation and Behavior":
+ - observation(code is https://loinc.org/44260-8/; status in [preliminary, final, amended, corrected]; valueCodeableConcept: in [LA6569-3; LA6570-1; LA6571-9])
 
-define "Most Recent PHQ-9 Observation":
-{Last ("PHQ-9 Observation" LastPHQ9
-where Global."Normalize Interval"(LastPHQ9.effective) during "Measurement Period")
-}
+//Outcome: "12mo Suicide Ideation and Behavior":
+ - "Suicide Ideation and Behavior" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
-//Outcome: 12mo Improvement in Depressive Symptoms - Remission (category=clinical response)
-//define "12mo Improvement in Depressive Symptoms Remission":
-//from
-//"Improvement in Depressive Symptoms Remission" FirstPHQ9,
-//"PHQ-9 LT 5 Observation" PHQ9LT5
+//Outcome: "Depression-specific Quality of Life Improvement":
+  - observation1 = first observation(code is 'Q-LES-Q'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+  - observation2 = last observation(code is 'Q-LES-Q'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+  - TRUE if observation2.valueQuantity > observation1.valueQuantity
 
-//Interval(start of FirstPHQ9 - 60 days, end of FirstPHQ9 + 60 days)
-// pseudo: PHQ9_2.effectiveDateTime is {within 12 months +/- 60 days} of TimeT
+//Outcome: "12mo Depression-specific Quality of Life Improvement":
+ - "Depression-specific Quality of Life Improvement" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
-// ------
-// ------ PHQ-9 > 9 is present during measurement period ---------
-// ------
-// exists ('PHQ-9 GT 9 Observation', PHQ9.effectiveDateTime) in measurement period
-// Set TimeT = First('PHQ-9 GT 9 Observation', PHQ9.effectiveDateTime) in measurement period
-// ------
-// ------ Patient is 18 or older at TimeT ---------
-// ------
-// patient.birthdate ~ 18 or older at TimeT
-// ------
-// ------ Patient has major depression or dysthmia at TimeT ---------
-// ------
-// exists (["Condition": "Major Depression Condition"] OR exists (["Condition": "Dysthmia Condition"] MajorDepression
-// MajorDepression.verificationStatus is confirmed or null
-// MajorDepression.onset < TimeT AND is not null
-// ------
-// ------ Patient has a subsequent PHQ-9 < 5 during time window ---------
-// ------
-// exists (["Observation": "PHQ-9 Total Score Observation"] PHQ9_2
-// PHQ9_2.status is 'final'
-// PHQ9_2.valueQuantity < 5
+//Outcome: "Depression-related Resource Utilization":
+ - Return all claims where claim(status is 'active'; use is 'claim'; diagnosis.diagnosisCodeableConcept in "Depression Condition");
 
+//Outcome: "12mo Depression-related Resource Utilization":
+ - Return all "Depression-related Resource Utilization" claims during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
-//Outcome: 6mo Improvement in Depressive Symptoms - Remission (category=clinical response)
-define "6mo Improvement in Depressive Symptoms Remission":
-exists (
-  from
-  "Most Recent PHQ-9 Observation" LastPHQ9,
-  "First PHQ-9 GT 9 Adult with Depression Dysthmia" FirstPHQ9_GT9
-  where LastPHQ9 is not null
-  and FirstPHQ9_GT9 is not null
-  and (FirstPHQ9_GT9.value - LastPHQ9.value)/FirstPHQ9_GT9.value >= 0.5
-  and start of Global."Normalize Interval"(LastPHQ9.effective) during
-  Interval(start of Global."Normalize Interval"(FirstPHQ9_GT9.effective) + 4 months, start of Global."Normalize Interval"(FirstPHQ9_GT9.effective) + 8 months)
-)
-// 6/8: whether there is an improvement in depressive symptoms.
-//Improvement is identified as: within 4 - 8 months window after the first PHQ-9 > 9, the most recent PHQ-9 value is 50% or less than the first PHQ-9 value.
+//Outcome: "Work Productivity Improvement":
+  - observation1 = first observation(code is 'WPAI Item 5'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+  - observation2 = last observation(code is 'WPAI Item 5'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+  - TRUE if observation2.valueQuantity < observation1.valueQuantity
 
-//"Improvement in Depressive Symptoms Remission" ImprovementDepressiveSymptoms
-//where Global."Normalize Interval"(ImprovementDepressiveSymptoms.effective) during "Measurement Period Plus 6mo"
-
-// PHQ9_2.effectiveDateTime is {within 6 months +/- 60 days} of TimeT
-
-//-----------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------
-// Modified below this line...
-//-----------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------
-
-
-//Outcome: Improvement in Depressive Symptoms - Response (category=clinical response)
-//define "Improvement in Depressive Symptoms Response":
-// exactly the same as Improvement-Remission except that rather than looking for a follow-up PHQ9<5,
-// we look for a follow-up PHQ9 that is reduced by 50% or greater from the initial PHQ-9 score.
-
-//Outcome: 6mo Improvement in Depressive Symptoms - Response (category=clinical response)
-//define "6mo Improvement in Depressive Symptoms Response":
-
-//Outcome: 12mo Improvement in Depressive Symptoms - Response (category=clinical response)
-//define "12mo Improvement in Depressive Symptoms Response":
-
-
-//Outcome: Worsening in Depressive Symptoms- Recurrence (category=clinical response)
-//define "Worsening in Depressive Symptoms- Recurrence":
-// meets remission criteria; AND
-// Remission at least 2 months; AND
-// ?what is the timeframe for recurrence?
-//
-// recurrence criteria:
-//     50% increase in PHQ-9 score; OR
-//     PHQ-9 score > 9; OR
-//     hospitalization for depression or suicidality
-//
-// hospitalization for depression or suicidality:
-//     Encounter
-//     status = 'finished', 'in-progress'
-//     class = 'IMP' (inpatient encounter), 'ACUTE' (inpatient acute), 'NONAC' (inpatient non-acute)
-//     diagnosis.condition, where referenced condition:
-//          (["Condition": "Depression Condition"] union ["Condition": "Suicidality Condition"]) DepressionOrSuicidality
-//           where DepressionOrSuicidality.verificationStatus = Global."confirmed"
-//           or DepressionOrSuicidality.verificationStatus is null
-
-//Outcome: 6mo Worsening in Depressive Symptoms- Recurrence (category=clinical response)
-//define "6mo Worsening in Depressive Symptoms- Recurrence":
-
-//Outcome: 12mo Worsening in Depressive Symptoms- Recurrence (category=clinical response)
-//define "12mo Worsening in Depressive Symptoms- Recurrence":
-
-
-//Outcome: Depression treatment-related Adverse Events (category=event of interest)
-//define "Depression treatment-related Adverse Events":
-//
-// Has Depression at start of measurement period: 
-//      exists "Depression"
-//      Depression.onset < start of measurement period
-//      Depression.abatement > start of measurement period or null
-// Has depression treatment related AdverseEvent:
-//
-// AdverseEvent
-//  - actuality = 'actual'
-//  - suspectEntity.instance.medicationAdministration.medicationCodeableConcept in Depression Medications; OR    
-//       suspectEntity.instance.medicationStatement.medicationCodeableConcept in Depression Medications; OR
-//       suspectEntity.instance.procedure.reasonCode in Depression Condition; OR
-
-
-//Outcome: 12mo Depression treatment-related Adverse Events (category=event of interest)
-//define "12mo Depression treatment-related Adverse Events":
-//  - For adverse event: AdverseEvent.date in 12mo measurement period
-
-
-//Outcome: Suicide Ideation and Behavior (category=event of interest)
-//define "Suicide Ideation and Behavior":
-// - Observation
-//   - status: in (preliminary, final, amended, corrected)
-//   - code: LOINC 44260-8 (https://loinc.org/44260-8/)
-//   - valueCodeableConcept: in (LA6569-3; LA6570-1; LA6571-9)
-
-
-//Outcome: 12mo Suicide Ideation and Behavior (category=event of interest)
-//define "12mo Suicide Ideation and Behavior":
-//   - effectiveDateTime: in 12mo measurement period
-
-
-//Outcome: Depression-specific Quality of Life (category=patient reported)
-//define "Depression-specific Quality of Life":
-// (criteria is that QOL was assessed using a validated instrument)
-// - Observation
-//   - status: in (preliminary, final, amended, corrected)
-//   - code: in “Depression-specific QOL Assessment” value set
-
-
-//Outcome: 12mo Depression-specific Quality of Life (category=patient reported)
-//define "12mo Depression-specific Quality of Life":
-//   - effectiveDateTime: in 12mo measurement period
-
-
-//Outcome: Depression-related Resource Utilization (category=resource utilization)
-//define "Depression-related Resource Utilization":
-// (Retrieve claims related to depression)
-//  - Claim
-//    - status:'active'
-//    - Use:'claim'
-//    - diagnosis
-//      - diagnosisCodeableConcept: in “Depression Condition” Value Set
-
-
-//Outcome: 12mo Depression-related Resource Utilization (category=resource utilization)
-//define "12mo Depression-related Resource Utilization":
-// - claim.created in 12mo measurement period
-
-
-//Outcome: Work Productivity (category=resource utilization)
-//define "Work Productivity":
-// (criteria: at least two observations in time window, where latest has higher value than earliest)
-// - Observation
-//   - status: in (preliminary, final, amended, corrected)
-//   - code: WPAI Item 5
-//   - effectiveTime
-//   - valueQuantity
-
-
-//Outcome: 12mo Work Productivity (category=resource utilization)
-//define "12mo Work Productivity":
-//   - effectiveDateTime: in 12mo measurement period
-
+//Outcome: "12mo Work Productivity Improvement":
+ - "Work Productivity Improvement" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
