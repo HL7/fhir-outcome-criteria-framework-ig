@@ -9,31 +9,29 @@ codesystem "ConditionClinicalStatusCodes": 'http://terminology.hl7.org/CodeSyste
 codesystem "SNOMEDCT": 'http://snomed.info/sct/731000124108'
 codesystem "LOINC": 'http://loinc.org'
 codesystem "NCI": 'http://ncimeta.nci.nih.gov'
+//codeSystem "Claim Type": 'http://terminology.hl7.org/CodeSystem/claim-type'
+codesystem "Elimu": 'http://elimu-local-defined-code-system' //temporary
 
 valueset "Depression Condition": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.314'
 valueset "Dysthmia Condition": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.67.1.101.1.254'
 valueset "Expired": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.345'
 valueset "Depression Medications": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.350'
 valueset "Suicidality": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.353'
-
-// This value set is Suicide Event, the resource uses Condition
 valueset "Suicide": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.349'
-
-//No Elimu value set. Is this NCQA value set ok?
-valueset "Major Depression Condition": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.105.12.1007'
+valueset "Major Depression Condition": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1196.348' //Depression Conditions Including Bipolar Disorder
+valueset "ClaimTypeCodes": 'http://hl7.org/fhir/ValueSet/claim-type'
 
 valueset "Suicide Ideation and Behavior Answer List": 'http://cts.nlm.nih.gov/fhir/ValueSet/suicide_ideation_behavior_answer_list_place_holder'
-
 code "Birthdate": '21112-8' from "LOINC" display 'Birth date'
 code "Suicide Ideation and Behavior": '44260-8' from "LOINC" display 'Thoughts that you would be better off dead, or of hurting yourself in some way in last 2W'
 code "PHQ-9 Total Score Observation": '44261-6' from "LOINC" display 'Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]'
-code "Q-LES-Q": 'Q-LES-Q' from "NCI" display 'Quality Of Life Enjoyment And Satisfaction Questionnaire'
+
+code "Q-LES-Q": 'Q-LES-Q' from "Elimu" display 'Quality Of Life Enjoyment And Satisfaction Questionnaire'//temporary
+code "WPAI Item 5": 'WPAI Item 5' from "Elimu" display 'The Work Productivity and Activity Impairment (WPAI) questionnaire Item 5'//temporary
 
 code "Several days": 'LA6569-3' from "LOINC" display 'Several days'
 code "More than half the days": 'LA6570-1' from "LOINC" display 'More than half the days'
 code "Nearly every day": 'LA6571-9' from "LOINC" display 'Nearly every day'
-
-code "WPAI Item 5": 'WPAI Item 5' //no code system
 
 parameter "Measurement Period" Interval<DateTime>
 //  default Interval[@2020-01-01T00:00:00.0, @2021-01-01T00:00:00.0)
@@ -282,11 +280,11 @@ and (
 // - "Depression"(onset < start of measurement period; abatement > start of measurement period or null); and
 // AdverseEvent(actuality is 'actual'; suspectEntity.instance.medication.code in "Depression Medications")
 // primaryCodePath in fhir-modelinfo-4.0.1.xml is event.
-// note: question for QI-Core, should the primary code be suspectEntity
+// note: FHIR tracker for AdverseEvent primary code
 define "Depression-related Adverse Events":
 [AdverseEvent: "Depression Medications"] DepressionRelatedAE
   where DepressionRelatedAE.actuality = 'actual'
-  and DepressionRelatedAE.suspectEntity in "Depression Medications"
+  //and DepressionRelatedAE.suspectEntity in "Depression Medications"
 
 define "Outcome Depression-related Adverse Events":
 "Depression-related Adverse Events" DepressionRelatedAE
@@ -377,8 +375,9 @@ return true
 
 //Outcome: "Depression-related Resource Utilization":
 // - Return all claims where claim(status is 'active'; use is 'claim'; diagnosis.diagnosisCodeableConcept in "Depression Condition");
+//note: primaryCodePath in modelinfo for Claim is "type"
 define "Outcome Depression-related Resource Utilization":
-[Claim] DepressionRelatedClaim //note: needs to find out if Claim is supported and which element is the primary code
+[Claim: "ClaimTypeCodes"] DepressionRelatedClaim
 where DepressionRelatedClaim.status = 'active'
 and DepressionRelatedClaim.use = 'claim'
 and DepressionRelatedClaim.diagnosis.diagnosisCodeableConcept in "Depression Condition"
@@ -387,7 +386,7 @@ and DepressionRelatedClaim.created during "Measurement Period"
 //Outcome: "12mo Depression-related Resource Utilization":
 // - Return all "Depression-related Resource Utilization" claims during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 define "Outcome 12mo Depression-related Resource Utilization":
-[Claim] DepressionRelatedClaim //note: needs to find out if Claim is supported and which element is the primary code
+[Claim: "ClaimTypeCodes"] DepressionRelatedClaim
 where DepressionRelatedClaim.status = 'active'
 and DepressionRelatedClaim.use = 'claim'
 and DepressionRelatedClaim.diagnosis.diagnosisCodeableConcept in "Depression Condition"
