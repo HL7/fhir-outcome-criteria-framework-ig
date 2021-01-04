@@ -12,7 +12,7 @@
       }
     ]
   },
-  "date": "2020-05-01",
+  "date": "2021-01-04",
   "description": "Contains a CQL library that encodes measure-specific criteria (such as Denominator criteria).",
   "useContext": [
     {

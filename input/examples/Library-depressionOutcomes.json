@@ -12,7 +12,7 @@
       }
     ]
   },
-  "date": "2020-05-01",
+  "date": "2021-01-04",
   "description": "Contains a CQL library that encodes depression outcome criteria as defined by the AHRQ expert panel.",
   "useContext": [
     {
