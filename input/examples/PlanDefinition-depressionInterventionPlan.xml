@@ -1,5 +1,36 @@
 <PlanDefinition xmlns="http://hl7.org/fhir">
-  <id value="depressionInterventionPlan"/> 
+  <id value="depressionInterventionPlan"/>
   <status value="draft"/>
   <library value="Library/depressionIntervention"/>
+  <action>
+    <title value="Intervene in new depression diagnosis"/>
+    <trigger>
+      <type value="data-added"/>
+      <data>
+        <type value="Condition"/>
+      </data>
+      <condition>
+        <description value="new diagnosis of depression"/>
+        <language value="text/cql"/>
+        <expression value="TriggerCriteria"/>
+      </condition>
+    </trigger>
+    <timingTiming>
+      <event>
+        <extension url="http://hl7.org/fhir/StructureDefinition/cqf-expression">
+          <valueExpression>
+            <language value="text/cql"/>
+            <expression value="Now()"/>
+          </valueExpression>
+        </extension>
+      </event>
+    </timingTiming>
+    <type>
+      <coding>
+        <system value="http://terminology.hl7.org/CodeSystem/action-type"/>
+        <code value="create"/>
+      </coding>
+    </type>
+    <definitionCanonical value="ActivityDefinition/alertToProviderForAvailableDepressionTools"/>
+  </action>
 </PlanDefinition>

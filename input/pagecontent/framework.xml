@@ -2,7 +2,11 @@
   <a name="overview"> </a>
   <h3>Introduction</h3>
   <p>
-    The Outcome Criteria Framework is illustrated by the following Figure. Sections that follow describe both normative and non-normative aspects of the Framework.
+    The Outcome Criteria Framework is illustrated by the following Figure. Sections that follow describe both normative and non-normative aspects of the Framework.  </p>
+  <p>
+    To understand the Framework, it helps to think of CQL library files as providing computable rules, whereas FHIR Library resources provide metadata. Every CQL library file is wrapped (by way of reference) by exactly one FHIR Library resource. There is deliberate redundancy built in, given the different roles played by CQL library files vs. FHIR Library resources. In particular, CQL library 'using' and 'include' clauses are redundantly represented in the referencing FHIR Library using Library.relatedArtifact (depends-on). This allows for compute-level referencing while also supporting library management (e.g. making sure you have all the files you need in order to begin computing).  </p>
+  <p>
+    A collection of CQL library files and FHIR Library resources can be thought of a core set of knowledge artifacts that are managed in a knowledge repository. FHIR resources for quality measurement (FHIR Measure resource), clinical decision support (FHIR PlanDefinition resource), and research (FHIR ResearchDefinition resource) reference in to the core collection. These FHIR resources that reference into the core provide additional context (in their CQL library files and FHIR Library resources) for the referenced rules. For instance, a core definition might exist for 'all cause mortality'. Where a measure criterion such as 'all cause mortality in diabetics' exists, the measure can reference and further refine the 'all cause mortality' definition.
   </p>
   <img src="overview.png" alt="Overview of what we're doing"/>
 
@@ -15,7 +19,7 @@
     <li><b>Conformance Requirement 'Referencing a CQL library': </b> No FHIR resource other than the FHIR Library resource shall directly reference a CQL library. A FHIR library shall reference exactly one CQL library.</li>
     <li><b>Conformance Requirement 'CQL expressions in a FHIR resource': </b>Asserted CQL expressions within a FHIR resource shall be contained in the CQL library that is referenced by the resource's referenced FHIR Library.</li>
     <li><b>Conformance Requirement 'CQL library is stand-alone': </b>A CQL library shall be a stand-alone file. Every CQL library shall be referenced by exactly one FHIR Library.</li>
-    <li><b>Conformance Requirement 'FHIR Library - CQL library redundancy': </b>CQL library 'using' and 'include' clauses shall be redundantly representedg in the referencing FHIR Library using Library.relatedArtifact (depends-on).</li>
+    <li><b>Conformance Requirement 'FHIR Library - CQL library redundancy': </b>CQL library 'using' and 'include' clauses shall be redundantly represented in the referencing FHIR Library using Library.relatedArtifact (depends-on).</li>
   </ul>
 
   <a name="NORMsemantic"> </a>
@@ -50,9 +54,9 @@
     Non-normative guidance is focused on considerations that maximize reusability. The considerations are non-normative because exceptions exist, insufficient use cases have been analyzed, and because the rules are more fuzzy and therefore less amenable to computational validation. </p>
   <h4>Considerations for maximizing reusability</h4>
   <ul>
-    <li><b>Timing</b>: We want to enable users to have the option to either select their own measure intervals or use canned intervals that are baked into core definitions. Therefore, our general approach will be to create both time-neutral (e.g. 'All-cause mortality') and time-specified (e.g. '12 month all-cause mortality') definitions. </li>
-    <li><b>Status</b>: We want to enable users to have some flexibility in cohorts with respect to condition status. Therefore, our general approach will be to NOT include condition status constraints in core definitions unless clearly required. For instance, the definition of 'Depression' does not include a constraint that Depression be active, since there may be cases where a group wants to study events that occur amongst patients whose depression is in remission.</li>
-    <li><b>Condition-neutral criteria</b>: all cause mortality - base definition doesn't even include depression, so that it reusable to other conditions. </li>
+    <li><b>Timing</b>: To enable users to have the option to either select their own measure intervals or use canned intervals that are baked into core definitions, we recommend creating a time-neutral (e.g. 'All-cause mortality') definition in addition to any time-specified definitions (e.g. '12 month all-cause mortality'). </li>
+    <li><b>Status</b>: To enable users to have some flexibility in cohorts with respect to condition status, we recommend to NOT include condition status constraints in core definitions unless clearly required. For instance, the definition of 'Depression' does not include a constraint that Depression be active, since there may be cases where a group wants to study events that occur amongst patients whose depression is in remission.</li>
+    <li><b>Condition-neutral criteria</b>: To maximize reuse, we recommend considering the atomic components of a definition for applicability as stand-alone definitions. For instance, from the definition 'all cause mortality in diabetics', it might be possible to create a more atomic and reusable definition for 'all cause mortality'. </li>
   </ul>
 
 </div>

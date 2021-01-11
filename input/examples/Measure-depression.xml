@@ -61,11 +61,11 @@
         <coding>
           <system
                   value="http://terminology.hl7.org/CodeSystem/measure-population"/>
-          <code value="initial-population"/>
-          <display value="Initial Population"/>
+          <code value="denominator"/>
+          <display value="Denominator"/>
         </coding>
       </code>
-      <criteria value="Initial Population"/>
+      <criteria value="DenominatorCriteria"/>
     </population>
   </group>
 </Measure>

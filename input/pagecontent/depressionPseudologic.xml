@@ -1,0 +1,139 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../src-generated/schemas/fhir-single.xsd">
+  <a name="introduction"> </a>
+  <h3>Introduction</h3>
+  <p>This page presents 'pseudologic' corresponding to the formal CQL code in the depressionOutcomes CQL library file. Pseudologic is semi-structured knowledge (corresponding to <a href="https://cds.ahrq.gov/cdsconnect">Layer 2 of the AHRQ CDS Connect framework</a>), meant to be formal yet human readable by subject matter experts wishing to understand and validate the logic encoded in CQL.</p>
+
+  <a name="pseudologic"> </a>
+  <h3>Pseudologic</h3>
+  <pre>
+    Pseudologic for CQL library DepressionOutcomes version '0.4'
+
+    using FHIR version '4.0.1'
+
+    include FHIRHelpers version '4.0.1'
+    include MATGlobalCommonFunctions version '5.0.000' called Global
+
+    ----------------
+    ----------------
+    value sets
+    ----------------
+    ----------------
+    Conditions/Findings
+     - Depression Condition
+     - Dysthymia Condition
+     - Expired
+     - Major Depression Condition
+     - Suicide Condition
+    Medications
+     - Depression Medications
+
+    ----------------
+    ----------------
+    parameters
+    ----------------
+    ----------------
+     - "Measurement Period" Interval&lt;DateTime>
+
+    ----------------
+    ----------------
+    context
+    ----------------
+    ----------------
+     - context Patient
+
+    ----------------
+    ----------------
+    Base definitions
+    ----------------
+    ----------------
+    //Base definition: "Depression"
+    - condition(code in "Depression Condition"; verificationStatus is 'confirmed' or null)
+
+    //Base definition: "Major Depression or Dysthmia":
+    - condition(code in "Dysthymia Condition" or "Major Depression Condition"; verificationStatus is 'confirmed' or null)
+
+    //Base definition: "PHQ-9 GT 9 Observation":
+     - observation(code is "PHQ-9 Total Score Observation"; status is 'final'; valueQuantity>9)
+
+    //Base definition: "First PHQ-9 GT 9 Observation":
+     - first "PHQ-9 GT 9 Observation" during "Measurement Period"
+
+    //Base definition: "PHQ-9 Observation":
+     - observation(code is "PHQ-9 Total Score Observation"]; status is 'final')
+
+    ----------------
+    ----------------
+    Outcomes
+    ----------------
+    ----------------
+    //Outcome: "All-cause Mortality":
+    - condition(code in "Expired"; verificationStatus is 'confirmed' or null)
+
+    //Outcome: "12mo All-cause Mortality":
+     - "All-cause Mortality" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+
+    //Outcome: "Death from Suicide":
+     - "Major Depression or Dysthmia"; and
+     - condition(code in "Suicide Condition"; verificationStatus is 'confirmed' or null)
+
+    //Outcome: "12mo Death from Suicide":
+     - "Death from Suicide" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+
+    //Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Remission":
+     - see graphic 'Improvement - Remission'
+
+    //Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Response":
+     - see graphic 'Improvement - Response'
+
+    //Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Recurrence":
+     - see graphic 'Worsening - Recurrence'
+
+    //Outcome: "Depression treatment-related Adverse Events":
+     - "Depression"(onset &lt; start of measurement period; abatement > start of measurement period or null); and
+     - AdverseEvent(actuality is 'actual'; suspectEntity.instance.medication.code in "Depression Medications")
+
+    //Outcome: "12mo Depression treatment-related Adverse Events"
+     - "Depression treatment-related Adverse Events" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+
+    //Outcome: "Suicide Ideation and Behavior":
+     - observation(code is https://loinc.org/44260-8/; status in [preliminary, final, amended, corrected]; valueCodeableConcept: in [LA6569-3; LA6570-1; LA6571-9])
+
+    //Outcome: "12mo Suicide Ideation and Behavior":
+     - "Suicide Ideation and Behavior" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+
+    //Outcome: "Depression-specific Quality of Life Improvement":
+      - observation1 = first observation(code is 'Q-LES-Q'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+      - observation2 = last observation(code is 'Q-LES-Q'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+      - TRUE if observation2.valueQuantity > observation1.valueQuantity
+
+    //Outcome: "12mo Depression-specific Quality of Life Improvement":
+     - "Depression-specific Quality of Life Improvement" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+
+    //Outcome: "Depression-related Resource Utilization":
+     - Return all claims where claim(status is 'active'; use is 'claim'; diagnosis.diagnosisCodeableConcept in "Depression Condition");
+
+    //Outcome: "12mo Depression-related Resource Utilization":
+     - Return all "Depression-related Resource Utilization" claims during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+
+    //Outcome: "Work Productivity Improvement":
+      - observation1 = first observation(code is 'WPAI Item 5'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+      - observation2 = last observation(code is 'WPAI Item 5'; status in [preliminary, final, amended, corrected]) in "Measurement Period";
+      - TRUE if observation2.valueQuantity &lt; observation1.valueQuantity
+
+    //Outcome: "12mo Work Productivity Improvement":
+     - "Work Productivity Improvement" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
+  </pre>
+
+  <a name="improvementRemission"> </a>
+  <h3>Graphic: Improvement - Remission</h3>
+  <img src="ImprovementRemission.png" alt="Improvement - Remission" width="640" height="360"/>
+
+  <a name="improvementResponse"> </a>
+  <h3>Graphic: Improvement - Response</h3>
+  <img src="ImprovementResponse.png" alt="Improvement - Response" width="640" height="360"/>
+
+  <a name="WorseningRecurrence"> </a>
+  <h3>Graphic: Worsening - Recurrence</h3>
+  <img src="WorseningRecurrence.png" alt="Worsening - Recurrence" width="640" height="360"/>
+
+</div>

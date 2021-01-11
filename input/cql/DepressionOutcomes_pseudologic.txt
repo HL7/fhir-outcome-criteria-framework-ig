@@ -1,6 +1,4 @@
-library DepressionOutcomes version '0.3'
-
-//draft CQL library for depression outcomes
+Pseudologic for CQL library DepressionOutcomes version '0.4'
 
 using FHIR version '4.0.1'
 
@@ -18,7 +16,6 @@ Conditions/Findings
  - Expired
  - Major Depression Condition
  - Suicide Condition
- - Suicidality Condition
 Medications
  - Depression Medications
 
@@ -48,8 +45,8 @@ Base definitions
 - condition(code in "Dysthymia Condition" or "Major Depression Condition"; verificationStatus is 'confirmed' or null)
 
 //Base definition: "PHQ-9 GT 9 Observation":
- - observation(code is "PHQ-9 Total Score Observation"]; status is 'final'; valueQuantity>9)
- 
+ - observation(code is "PHQ-9 Total Score Observation"; status is 'final'; valueQuantity>9)
+
 //Base definition: "First PHQ-9 GT 9 Observation":
  - first "PHQ-9 GT 9 Observation" during "Measurement Period"
 
@@ -69,19 +66,19 @@ Outcomes
 
 //Outcome: "Death from Suicide":
  - "Major Depression or Dysthmia"; and
- - condition(code in "Suicide"; verificationStatus is 'confirmed' or null)
+ - condition(code in "Suicide Condition"; verificationStatus is 'confirmed' or null)
 
 //Outcome: "12mo Death from Suicide":
  - "Death from Suicide" during Interval(start of "Measurement Period", start of "Measurement Period" + 12 months)
 
 //Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Remission":
- - see graphic
+ - see graphic 'Improvement - Remission'
 
 //Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Response":
- - see graphic
+ - see graphic 'Improvement - Response'
 
 //Outcome: "(6mo) (12mo) Improvement in Depressive Symptoms - Recurrence":
- - see graphic
+ - see graphic 'Worsening - Recurrence'
 
 //Outcome: "Depression treatment-related Adverse Events":
  - "Depression"(onset < start of measurement period; abatement > start of measurement period or null); and

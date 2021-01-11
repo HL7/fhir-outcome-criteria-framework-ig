@@ -103,6 +103,11 @@
 					<nameUrl value="depressionExample.html"/>
 					<title value="Depression Example"/>
 					<generation value="html"/>
+					<page>
+						<nameUrl value="depressionPseudologic.html"/>
+						<title value="Depression Example - CQL Pseudologic"/>
+						<generation value="html"/>
+					</page>
 				</page>
 			</page>
 		</page>
