@@ -38,5 +38,9 @@
   <li>The FMG would like feedback on whether this Implementation Guide should be balloted along a normative vs. informative track.</li>
   <li>CQI would like feedback on whether it would be useful to define high level profiles that represent the major categories of outcomes (survival, clinical response, events of interest, patient reported, resource utilization)</li>
 </ul>
-
+<h4>Open issues (to be addressed before going to ballot)</h4>
+<ul>
+  <li><b>Onset vs. Recorded time</b>: At times, when we ask 'was condition X active at time T', we really mean 'was condition X <b>known</b> active at Time T'. In such a case, we can use both Onset and Recorded time in CQL logic: 'Recorded date &lt; time T; AND Onset &lt; time T; AND Abatement > time T or null".</li>
+  <li><b>Adverse Events</b>: Adverse events due to anti-depressant medications currently relies on a value set containing product-level codes. We should explore whether other types of codes (e.g. ingredient-level codes) are also needed.</li>
+  <li><b>QoL codes</b>: LOINC may have added applicable codes for Quality of Life instruments. </li></ul>
 </div>
